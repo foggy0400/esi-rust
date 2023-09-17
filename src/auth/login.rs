@@ -1,6 +1,9 @@
 extern crate open;
-extern crate reqwest;
-extern crate urlencoding;
+extern crate rand;
+
+use base64::{engine::general_purpose, Engine as _};
+use rand::distributions::{Alphanumeric, DistString};
+use rand::Rng;
 
 use urlencoding::encode;
 pub fn generate_scope(scopes: &str) -> &str {
@@ -11,11 +14,17 @@ pub fn generate_scope(scopes: &str) -> &str {
 pub fn launch_login_page(client_id: &str, callback_url: &str, scope: &str) -> bool {
     let root_url: &str =
         "https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=";
-    let unformatted_url = format!(
-        "{}{}&client_id={}&scope={}",
-        root_url, callback_url, client_id, scope
+    let state_string = Alphanumeric.sample_string(&mut rand::thread_rng(), 16);
+    let code_verifier = rand::thread_rng().gen::<[u8; 32]>();
+    let url = format!(
+        "{}{}&client_id={}&scope={}&code_challenge={}&code_challenge_method=S256&state={}",
+        root_url,
+        encode(callback_url),
+        encode(client_id),
+        encode(scope),
+        encode(&general_purpose::STANDARD.encode(&code_verifier)),
+        encode(&state_string)
     );
-    let url = encode(&unformatted_url);
     println!("{}", url);
     match open::that(&*url) {
         Ok(()) => true,
