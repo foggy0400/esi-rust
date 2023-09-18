@@ -6,6 +6,6 @@ mod tests {
 
     #[test]
     fn login_test() {
-        assert_ne!(launch_login_page("test", "test", "test"), true);
+        assert_eq!(launch_login_page("test", "test", "test"), true);
     }
 }
