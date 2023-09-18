@@ -6,11 +6,20 @@ use rand::distributions::{Alphanumeric, DistString};
 use rand::Rng;
 
 use urlencoding::encode;
+/// Placeholder function to generate a space-separated list of scopes.
+/// May be broken out into separate folder.
 pub fn generate_scope(scopes: &str) -> &str {
     println!("{}", scopes);
     "test"
 }
 
+/// Launches the Eve SSO login page to obtain user authentication.
+///
+/// # Arguments
+///
+/// * 'client_id' - the client ID of the application using the library
+/// * 'callback_url' - the application's callback URL
+/// * 'scope' - the scopes being requested by the application
 pub fn launch_login_page(client_id: &str, callback_url: &str, scope: &str) -> bool {
     let root_url: &str =
         "https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=";
@@ -25,7 +34,6 @@ pub fn launch_login_page(client_id: &str, callback_url: &str, scope: &str) -> bo
         encode(&general_purpose::STANDARD.encode(&code_verifier)),
         encode(&state_string)
     );
-    println!("{}", url);
     match open::that(&*url) {
         Ok(()) => true,
         Err(err) => {
