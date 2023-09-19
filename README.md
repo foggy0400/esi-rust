@@ -15,6 +15,7 @@ This library is not currently available on crates.io due to its in-development s
 To install and use, clone this git repository, install Rust and Cargo, and run 'cargo build' on the directory.
 You should then be able to link to it through the file system.
 More detailed documentation will be produced through the development process although I am attempting to document functions as I go.
+Use 'cargo doc --no-deps --open' to view the documentation and use 'cargo test' to run the suite of unit tests.
 
 ## Distribution and Support
 This software will be eventually made available through crates.io (the Rust package repository).
