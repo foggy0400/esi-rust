@@ -175,7 +175,7 @@ pub fn launch_login_page(
 
 #[cfg(test)]
 mod tests {
-    use super::{gen_url, CodeVerifier, StateString};
+    use super::{CodeVerifier, StateString};
     use rand::distributions::{Alphanumeric, DistString};
     use rand::Rng;
 
