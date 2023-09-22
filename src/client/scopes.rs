@@ -35,18 +35,22 @@ impl PartialOrd for ScopeList {
 
 impl Eq for ScopeList {}
 
+/// Struct to handle management of ESI scopes.
+/// Maintains a sorted list of scopes and a cached copy of the URL representation of the scopes.
 pub struct ScopeManager {
     scopes: Vec<ScopeList>,
     scope_str: String,
 }
 
 impl ScopeManager {
+    /// Creates a new ScopeManager object.
     pub fn new() -> ScopeManager {
         ScopeManager {
             scopes: vec![],
             scope_str: String::new(),
         }
     }
+    /// Returns the cached scope string representation.
     pub fn get_scope_string(&self) -> &str {
         &self.scope_str
     }
@@ -58,6 +62,7 @@ impl ScopeManager {
         }
         self.scope_str = String::from(fmt_string.trim())
     }
+    /// Adds a single ESI scope (from the [ScopeList] enum) to the ScopeManager.
     pub fn add_scope(&mut self, scope: ScopeList) -> Result<usize, &str> {
         match self.scopes.binary_search(&scope) {
             Ok(_) => Err("Scope already in array"),
@@ -77,6 +82,7 @@ impl ScopeManager {
             }
         }
     }
+    /// Adds a Vec of ESI scopes (from the [ScopeList] enum) to the ScopeManager.
     pub fn add_scopes(&mut self, scopes: Vec<ScopeList>) -> (Vec<ScopeList>, Vec<ScopeList>) {
         let mut suc_v = vec![];
         let mut err_v = vec![];
@@ -95,6 +101,7 @@ impl ScopeManager {
             Err(_) => Err("Scope not in array"),
         }
     }
+    /// Removes a single ESI scope (from the [ScopeList] enum) from the ScopeManager.
     pub fn remove_scope(&mut self, scope: ScopeList) -> Result<ScopeList, &str> {
         match self.scopes.binary_search(&scope) {
             Ok(idx) => {
@@ -104,6 +111,7 @@ impl ScopeManager {
             Err(_) => Err("Scope not in array"),
         }
     }
+    /// Removes a Vec of ESI scopes (from the [ScopeList] enum) from the ScopeManager.
     pub fn remove_scopes(&mut self, scopes: Vec<ScopeList>) -> (Vec<ScopeList>, Vec<ScopeList>) {
         let mut suc_v = vec![];
         let mut err_v = vec![];
