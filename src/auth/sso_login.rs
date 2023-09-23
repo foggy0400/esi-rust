@@ -48,7 +48,7 @@ impl Default for CodeVerifier {
 ///
 /// # Example
 /// ```
-/// # use esi_rust::auth::login::gen_url;
+/// # use esi_rust::auth::sso_login::gen_url;
 /// let mut bytes: [u8; 32] = [8; 32];
 /// let url = gen_url("myclient", "mycallback", "scopes", "statestring", &bytes);
 /// assert_eq!("https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=mycallback&client_id=myclient&scope=scopes&code_challenge=CAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg%3D&code_challenge_method=S256&state=statestring", url);

@@ -1,11 +1,13 @@
-use self::scopes::ScopeManager;
-
 pub mod scopes;
+
+use self::scopes::ScopeManager;
+use crate::http::client::HttpClient;
 
 /// Main class for handling interaction with the ESI API.
 pub struct EsiClient {
     client_id: &'static str,
     pub scopes: ScopeManager,
+    pub http: HttpClient,
 }
 
 impl EsiClient {
@@ -18,6 +20,7 @@ impl EsiClient {
         EsiClient {
             client_id: client_id,
             scopes: ScopeManager::new(),
+            http: HttpClient::new(),
         }
     }
     /// Returns the client ID associated with the EsiClient.
