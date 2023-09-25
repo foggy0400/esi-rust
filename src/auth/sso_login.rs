@@ -7,6 +7,7 @@ use rand::Rng;
 use urlencoding::encode;
 
 /// Enum implementing an optionally customisable value for the SSO state string
+#[derive(Clone, Debug)]
 pub enum StateString {
     Standard,
     Custom(String),
@@ -69,7 +70,7 @@ pub fn gen_url(
     let url = format!(
         "{}{}&client_id={}&scope={}&code_challenge={}&code_challenge_method=S256&state={}",
         root_url,
-        encode(callback_url),
+        callback_url,
         encode(client_id),
         encode(scope),
         encode(&general_purpose::STANDARD.encode(code_ver)),
